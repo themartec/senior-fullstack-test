@@ -12,7 +12,7 @@ const NiceMeta = styled.div`
     font-size: 0.7rem;
     background: grey;
     color: white;
-    padding: 0px 0.2rem;
+    padding: 0px 0.4rem;
     border-radius: 5px;
 `
 
@@ -23,10 +23,10 @@ const NiceContent = styled.div`
 
 const MetaDisplay = (props: any) => {
     return <>
-        <Stack flexDirection={'column'} justifyContent={'center'} sx={{ marginTop: '5px' }}>
-            <Grid container spacing={1}>
+        <Stack flexDirection={'column'} justifyContent={'center'}>
+            <Grid container spacing={1} alignItems={'center'}>
                 <Grid item>
-                    <Typography sx={{ display: 'block', minWidth: '80px' }} fontSize={'0.7rem'}>
+                    <Typography sx={{ display: 'block', minWidth: '30px' }} fontSize={'0.7rem'}>
                         <FacebookIcon sx={{ color: "#1565c0" }} />
                     </Typography>
                 </Grid>
@@ -46,9 +46,9 @@ const MetaDisplay = (props: any) => {
                     </NiceMeta>
                 </Grid>
             </Grid>
-            <Grid container spacing={1}>
+            <Grid container spacing={1} alignItems={'center'}>
                 <Grid item>
-                    <Typography sx={{ display: 'block', minWidth: '80px' }} fontSize={'0.7rem'}>
+                    <Typography sx={{ display: 'block', minWidth: '30px' }} fontSize={'0.7rem'}>
                         <LinkedInIcon />
                     </Typography>
                 </Grid>
