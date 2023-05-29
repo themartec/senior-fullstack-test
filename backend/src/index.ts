@@ -26,9 +26,10 @@ const db_password = process.env.MONGO_PASSWORD;
 const db_host = process.env.MONGO_HOST;
 const db_port = process.env.MONGO_PORT;
 const db_source = process.env.MONGO_SOURCE;
+const db_auth_source = process.env.MONGO_AUTH_SOURCE;
 
 //specify mongodb uri authSource=admin
-const mongoUri = `mongodb://${db_username}:${db_password}@${db_host}:${db_port}/${db_source}?authSource=admin`;
+const mongoUri = `mongodb://${db_username}:${db_password}@${db_host}:${db_port}/${db_source}?authSource=${db_auth_source}`;
 
 mongoose.connect(mongoUri, {}).then(() => {
     console.log('Database connected');
