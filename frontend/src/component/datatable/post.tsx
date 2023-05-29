@@ -161,6 +161,7 @@ const PostTable = () => {
                 pageSizeOptions={[5, 10]}
                 paginationMode="server"
                 onPaginationModelChange={handlePaginationModelChange}
+                loading={postStore.isLoading}
             />
         </div>
     </>
