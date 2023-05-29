@@ -23,7 +23,7 @@ const NiceContent = styled.div`
 
 const MetaDisplay = (props: any) => {
     return <>
-        <Stack flexDirection={'column'} justifyContent={'center'}>
+        <Stack flexDirection={'column'} justifyContent={'center'} sx={{ marginTop: '5px' }}>
             <Grid container spacing={1}>
                 <Grid item>
                     <Typography sx={{ display: 'block', minWidth: '80px' }} fontSize={'0.7rem'}>
@@ -104,7 +104,7 @@ const PostTable = () => {
             field: 'createdAt', headerName: 'Posted at', sortable: false,
             width: 150,
             valueGetter: (params: GridValueGetterParams) => {
-                return `${dayjs(params.row.createdAt).format('DD/MM/YYsYY HH:MM')}`
+                return `${dayjs(params.row.createdAt).format('DD/MM/YYYY HH:MM')}`
             }
         },
         {
