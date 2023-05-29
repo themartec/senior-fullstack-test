@@ -1,4 +1,4 @@
-import { GridColDef, GridValueGetterParams, DataGrid, GridRowSpacingParams } from '@mui/x-data-grid';
+import { GridColDef, GridValueGetterParams, DataGrid, GridRowSpacingParams, GridPaginationModel } from '@mui/x-data-grid';
 import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { getPosts } from '../../redux/post';
@@ -76,12 +76,25 @@ const PostTable = () => {
     const dispatch = useAppDispatch()
     const postStore = useAppSelector(state => state.post)
 
-    const [currentPage, setCurrentPage] = React.useState(1)
-    const [pageSize, setPageSize] = React.useState(10)
+    const [pageModel, setPageModel] = React.useState({
+        pageSize: 5,
+        page: 0
+    })
+
+    const rowCount = postStore.totalCount
+
+    const [rowCountState, setRowCountState] = React.useState(rowCount);
 
     useEffect(() => {
-        dispatch(getPosts(currentPage, pageSize))
+        dispatch(getPosts(pageModel.page, pageModel.pageSize))
     }, [])
+
+    React.useEffect(() => {
+        setRowCountState((prevRowCountState) =>
+            rowCount !== undefined ? rowCount : prevRowCountState,
+        );
+    }, [rowCount, setRowCountState]);
+
 
     const columns: GridColDef[] = [
         {
@@ -128,12 +141,11 @@ const PostTable = () => {
         };
     }, []);
 
-    const handlePaginateModelChange = React.useCallback((params: any) => {
-        let currentPage = params.page + 1
-        setCurrentPage(currentPage)
-        setPageSize(params.pageSize)
-        dispatch(getPosts(currentPage, params.pageSize))
-    }, [])
+    const handlePaginationModelChange = (newPaginationModel: GridPaginationModel) => {
+        // We have the cursor, we can allow the page transition.
+        dispatch(getPosts(newPaginationModel.page + 1, newPaginationModel.pageSize))
+        setPageModel(newPaginationModel);
+    };
 
     return <>
         <div style={{ width: '100%' }}>
@@ -144,14 +156,11 @@ const PostTable = () => {
                 getRowId={(row) => row._id}
                 rows={postStore.posts}
                 columns={columns}
-                initialState={{
-                    pagination: {
-                        paginationModel: { page: currentPage, pageSize: pageSize },
-                    },
-                }}
-                rowCount={postStore.totalCount}
+                paginationModel={pageModel}
+                rowCount={rowCountState}
                 pageSizeOptions={[5, 10]}
-                onPaginationModelChange={handlePaginateModelChange}
+                paginationMode="server"
+                onPaginationModelChange={handlePaginationModelChange}
             />
         </div>
     </>
